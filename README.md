@@ -9,7 +9,7 @@
 5.	Добавить в приложение из пункта 2 выпадающий список со всеми авторами и кнопку “поиск по автору”. При нажатии на неё должен отображаться полный список статей выбранного автора.
 
 ![](https://github.com/cherep121/lab9_bd/scrins/image.png)
-
+[![IMAGE ALT TEXT HERE](https://github.com/cherep121/lab9_bd/scrins/image.png)]
 
 Литература
 1.	Руководство по Node.js / https://metanit.com/web/nodejs 
