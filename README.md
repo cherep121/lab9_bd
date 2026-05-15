@@ -10,7 +10,8 @@
 
 <img
    class="fit-picture"
-   src=""
+   src="https://github.com/cherep121/lab9_bd/blob/main/scrins/image.png"
+/>
    
 Литература
 1.	Руководство по Node.js / https://metanit.com/web/nodejs 
