@@ -198,6 +198,34 @@
             font-size: 14px;
         }
 
+        .article-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .article-actions button {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .article-actions .view-btn {
+            background: #3a4a3a;
+        }
+
+        .article-actions .view-btn:hover {
+            background: #4a5a4a;
+        }
+
+        .article-actions .delete-btn {
+            background: #5a3a3a;
+        }
+
+        .article-actions .delete-btn:hover {
+            background: #6a4a4a;
+        }
+
         .no-articles {
             text-align: center;
             padding: 60px 20px;
@@ -261,29 +289,42 @@
 
         <div class="button-group">
             <!-- Кнопка "список статей" -->
-            <form method="GET">
+            <form method="GET" style="display: inline-block;">
                 <input type="hidden" name="action" value="list">
                 <button type="submit">📄 Список статей</button>
             </form>
 
-            <!-- Поиск по названию -->
-            <form method="GET">
+            <form method="GET" style="display: inline-block;">
                 <input type="hidden" name="action" value="search">
-                <input type="text" name="title" placeholder="Введите текст для поиска..." value="<%= searchTitle %>">
-                <button type="submit">🔍 Поиск по названию</button>
+                <input type="text" name="title" placeholder="🔍 Введите текст для поиска..." value="<%= searchTitle %>">
+                <button type="submit">Поиск по названию</button>
             </form>
 
-            <!-- Поиск по автору -->
-            <form method="GET">
+            <form method="GET" style="display: inline-block;">
                 <input type="hidden" name="action" value="filterAuthor">
                 <select name="author">
-                    <option value="">-- Выберите автора --</option>
+                    <option value="">👨‍🎓 -- Выберите автора --</option>
                     <% authorsList.forEach(author => { %>
                         <option value="<%= author %>" <%= selectedAuthor === author ? 'selected' : '' %>><%= author %></option>
                     <% }); %>
                 </select>
-                <button type="submit">👤 Поиск по автору</button>
+                <button type="submit">Поиск по автору</button>
             </form>
+
+            <form method="GET" style="display: inline-block;">
+                <input type="hidden" name="action" value="dateRange">
+                <input type="date" name="startDate" value="<%= startDate %>" placeholder="Дата начала">
+                <input type="date" name="endDate" value="<%= endDate %>" placeholder="Дата окончания">
+                <button type="submit">📅 Поиск по дате</button>
+            </form>
+
+            <a href="/top" style="text-decoration: none; display: inline-block;">
+                <button type="button">🏆 Топ статей</button>
+            </a>
+
+            <a href="/create" style="text-decoration: none; display: inline-block;">
+                <button type="button">➕ Создать статью</button>
+            </a>
         </div>
 
         <hr>
@@ -296,7 +337,7 @@
         <% } else { %>
             <div class="articles-list">
                 <% articles.forEach((article, index) => { %>
-                    <div class="article-card">
+                    <div class="article-card" data-article-id="<%= article._id %>">
                         <div class="article-header">
                             <span class="article-number"><%= index+1 %></span>
                             <span class="article-title"><%= article.title %></span>
@@ -309,10 +350,40 @@
                             <summary>📑 Содержание статьи</summary>
                             <p><%= article.content %></p>
                         </details>
+                        <div class="article-actions">
+                            <a href="/article/<%= article._id %>" style="text-decoration: none;">
+                                <button class="view-btn" type="button">👁️ Просмотр статьи</button>
+                            </a>
+                            <button class="delete-btn" type="button" onclick="deleteArticle('<%= article._id %>')">🗑️ Удалить статью</button>
+                        </div>
                     </div>
                 <% }); %>
             </div>
         <% } %>
     </div>
+
+    <script>
+        async function deleteArticle(id) {
+            if (confirm('❓ Вы уверены, что хотите удалить эту статью?')) {
+                try {
+                    const response = await fetch('/article/' + id, { 
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('✅ Статья успешно удалена');
+                        location.reload();
+                    } else {
+                        alert('❌ Ошибка при удалении статьи');
+                    }
+                } catch (error) {
+                    alert('❌ Ошибка соединения с сервером');
+                }
+            }
+        }
+    </script>
 </body>
 </html>

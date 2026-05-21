@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title><%= article.title %></title>
+    <style>
+        body { background: #1a1a1a; font-family: Arial; padding: 40px; color: #ddd; }
+        .container { max-width: 800px; margin: auto; background: #2d2d2d; padding: 30px; border-radius: 16px; }
+        button { background: #3a3a3a; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+        a { color: #aaa; text-decoration: none; }
+        .review { background: #242424; padding: 10px; margin: 10px 0; border-left: 3px solid #666; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><%= article.title %></h1>
+    <p><strong>Авторы:</strong> <%= article.authors.join(', ') %></p>
+    <p><strong>Дата:</strong> <%= article.date.toLocaleDateString('ru-RU') %></p>
+    <p><strong>Содержание:</strong></p>
+    <p style="background: #1e1e1e; padding: 15px; border-radius: 8px;"><%= article.content %></p>
+    <p><strong>Теги:</strong> <%= article.tags.join(', ') %></p>
+
+    <h3>Рецензии (<%= article.reviews.length %>)</h3>
+    <% if (article.reviews.length === 0) { %>
+        <p>Нет рецензий.</p>
+    <% } else { %>
+        <% article.reviews.forEach(rev => { %>
+            <div class="review">
+                <strong><%= rev.name %></strong> (оценка: <%= rev.rating %>/10)<br>
+                <%= rev.message %>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <a href="/"><button>← Назад</button></a>
+</div>
+</body>
+</html>

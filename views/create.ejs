@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать статью</title>
+    <style>
+        body { background: #1a1a1a; font-family: Arial; padding: 40px; color: #ddd; }
+        .container { max-width: 600px; margin: auto; background: #2d2d2d; padding: 30px; border-radius: 16px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #1f1f1f; border: 1px solid #444; color: #ddd; border-radius: 6px; }
+        button { background: #3a3a3a; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>➕ Создать новую статью</h1>
+    <form method="POST" action="/create">
+        <input type="text" name="title" placeholder="Название" required>
+        <input type="text" name="authors" placeholder="Авторы (через запятую)" required>
+        <textarea name="content" rows="6" placeholder="Содержание статьи" required></textarea>
+        <input type="text" name="tags" placeholder="Теги (через запятую)">
+        <button type="submit">Сохранить</button>
+        <a href="/"><button type="button">Отмена</button></a>
+    </form>
+</div>
+</body>
+</html>
